@@ -1,0 +1,122 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DCC</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+        .container {
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        h1 {
+            font-size: 28px; 
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 20px; 
+        }
+        h2, h3, h4, h5, h6, h7 {
+            font-weight: bold;
+            font-size: 22px; 
+            margin-top: 20px; 
+        }
+        select, input[type="text"] {
+            width: 100%; 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border-radius: 5px; 
+            border: 1px solid #ccc;
+            box-sizing: border-box; 
+        }
+        button {
+            padding: 10px 20px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer; 
+        }
+        button:hover {
+            background-color: #45a049; 
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DCC Assignment</h1>
+
+        <!-- Q1 -->
+        <h2>Q1 Search Bond Number</h2>
+        <form action="/search" method="POST">
+            <input type="text" name="search_query" placeholder="Enter Bond Number">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- Q2 -->   
+        <h3>Q2 Select a Company or Individual</h3>
+        <form action="/company_bonds" method="post">
+            <select name="company_name">
+                {% for company in companies %}
+                <option value="{{ company[0] }}">{{ company[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Graph</button>
+        </form>
+
+        <!-- Q3 -->   
+        <h4>Q3 Select a Political Party</h4>
+        <form action="/party_bonds" method="post">
+            <select name="party_name">
+                {% for party in party %}
+                <option value="{{ party[0] }}">{{ party[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Graph</button>
+        </form>
+
+        <!-- Q4 -->
+        <h5>Q4 Select a Political Party </h5>
+        <form action="/get_donation_data" method="POST">
+            <select name="party_name">
+                {% for party in party %}
+                <option value="{{ party[0] }}">{{ party[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Data</button>
+        </form>
+
+        <!-- Q5 -->
+        <h6>Q5 Select a Company or Individual</h6>
+        <form action="/get_party_data" method="POST">
+            <select name="company_name">
+                {% for company in companies %}
+                <option value="{{ company[0] }}">{{ company[0] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Data</button>
+        </form>
+
+        <!-- Q6 -->
+        <h7>Q6 Pie Chart</h7>
+        <form action="/get_pie" method="POST">
+            <button type="submit">Get Pie Chart</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Developed by - Madhup Sankhla</p>
+        <p>Roll No. - 23110190</p>
+    </footer>
+</body>
+</html>

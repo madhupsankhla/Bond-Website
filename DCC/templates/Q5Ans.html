@@ -1,0 +1,70 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px; 
+        }
+
+        .download-btn:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Party Data</h1>
+    <h2>Total Sum of Denominations: {{ total_sum }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Name of the Political Party</th>
+                <th>Denominations</th>
+                <th>Bond Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in party_data %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="download-btn" onclick="openPrint()">Download PDF</button>
+
+    <script>
+        function openPrint() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

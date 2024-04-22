@@ -1,0 +1,132 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar and Pie Graph</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 20px; 
+        }
+
+        canvas {
+            width: 100%; 
+            max-width: 800px; 
+            height: auto; 
+            margin-bottom: 20px; 
+        }
+
+        button {
+            padding: 10px 20px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-bottom: 20px; 
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Year Vs Total Bond Value</h1>
+    <canvas id="barChart"></canvas>
+    <canvas id="pieChart"></canvas>
+    <button id="downloadBarBtn">Download Bar Chart</button>
+    <button id="downloadPieBtn">Download Pie Chart</button>
+
+    <script>
+      
+        var data = {{ data2 | tojson }};
+        var years = {{ years | tojson }};
+
+      
+        var ctxBar = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Bonds Purchased',
+                    data: data,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)', 
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+   
+        var ctxPie = document.getElementById('pieChart').getContext('2d');
+        var pieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Bonds Purchased',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {}
+        });
+
+        document.getElementById('downloadBarBtn').addEventListener('click', function() {
+            var canvasBar = document.getElementById('barChart');
+            var imgDataBar = canvasBar.toDataURL('image/png');
+            var linkBar = document.createElement('a');
+            linkBar.download = 'bar_chart.png';
+            linkBar.href = imgDataBar;
+            linkBar.click();
+        });
+
+        document.getElementById('downloadPieBtn').addEventListener('click', function() {
+            var canvasPie = document.getElementById('pieChart');
+            var imgDataPie = canvasPie.toDataURL('image/png');
+            var linkPie = document.createElement('a');
+            linkPie.download = 'pie_chart.png';
+            linkPie.href = imgDataPie;
+            linkPie.click();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Party Bonds Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-container {
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        canvas {
+            max-width: 15cm;
+            max-height: 10cm;
+            margin-bottom: 20px; 
+        }
+
+        button {
+            padding: 10px 20px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-bottom: 20px; 
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <canvas id="countChart" width="600" height="320"></canvas>
+        <button onclick="downloadChart('countChart')">Download Count Bar Chart</button>
+        <button onclick="downloadPolarChart('countPolarChart')">Download Count Polar Area Chart</button>
+        <canvas id="countPolarChart" width="300" height="300"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="sumChart" width="600" height="320"></canvas>
+        <button onclick="downloadChart('sumChart')">Download Sum Bar Chart</button>
+        <button onclick="downloadPolarChart('sumPolarChart')">Download Sum Polar Area Chart</button>
+        <canvas id="sumPolarChart" width="300" height="300"></canvas>
+    </div>
+
+    <script>
+        var years = {{ years|tojson }};
+        var yearly_count = {{ yearly_count|tojson }};
+        var yearly_sum = {{ yearly_sum|tojson }};
+
+        var countCtx = document.getElementById('countChart').getContext('2d');
+        var countChart = new Chart(countCtx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Yearly Count of Bonds',
+                    data: yearly_count,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)', 
+                    borderColor: 'rgba(255, 99, 132, 1)', 
+                    borderWidth: 1,
+                    fill: false
+                }]
+            }
+        });
+
+        var countPolarCtx = document.getElementById('countPolarChart').getContext('2d');
+        var countPolarChart = new Chart(countPolarCtx, {
+            type: 'polarArea',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Yearly Count of Bonds',
+                    data: yearly_count,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        var sumCtx = document.getElementById('sumChart').getContext('2d');
+        var sumChart = new Chart(sumCtx, {
+            type: 'bar',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Yearly Sum of Denomination',
+                    data: yearly_sum,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)', 
+                    borderWidth: 1,
+                    fill: false
+                }]
+            }
+        });
+
+        var sumPolarCtx = document.getElementById('sumPolarChart').getContext('2d');
+        var sumPolarChart = new Chart(sumPolarCtx, {
+            type: 'polarArea',
+            data: {
+                labels: years,
+                datasets: [{
+                    label: 'Yearly Sum of Denomination',
+                    data: yearly_sum,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.6)',
+                        'rgba(54, 162, 235, 0.6)',
+                        'rgba(255, 206, 86, 0.6)',
+                        'rgba(75, 192, 192, 0.6)',
+                        'rgba(153, 102, 255, 0.6)',
+                        'rgba(255, 159, 64, 0.6)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+
+        function downloadChart(chartId) {
+            var canvas = document.getElementById(chartId);
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            var link = document.createElement('a');
+            link.download = chartId + '.png';
+            link.href = image;
+            link.click();
+        }
+
+        function downloadPolarChart(chartId) {
+            var canvas = document.getElementById(chartId);
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            var link = document.createElement('a');
+            link.download = chartId + '.png';
+            link.href = image;
+            link.click();
+        }
+    </script>
+</body>
+</html>

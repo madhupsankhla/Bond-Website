@@ -1,0 +1,91 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pie Page</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        canvas {
+            max-width: 100%; 
+            height: auto;
+            margin-bottom: 20px; 
+        }
+
+        button {
+            padding: 10px 20px; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin-bottom: 20px; 
+        }
+
+        button:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        function download() {
+            var canvas = document.getElementById("myChart");
+            var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            var a = document.createElement('a');
+            a.href = image;
+            a.download = 'chart.png';
+            a.click();
+        }
+    </script>
+
+    <div>
+        <canvas id="myChart"></canvas>
+        <button onclick="download()">Download Chart</button> 
+    </div>
+    <script>
+        var x_axis = JSON.parse('{{x_axis|tojson}}');
+        var y_axis = JSON.parse('{{y_axis|tojson}}');
+        const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: x_axis,
+                datasets: [{
+                    label: 'Amount Encashed in Lakhs',
+                    data: y_axis,
+                    borderWidth: 0.3,
+                    hoverOffset: 40
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        enabled: true,
+                        mode: 'nearest',
+                        intersect: false,
+                        bodySpacing: 8,
+                        titleSpacing: 6,
+                        cornerRadius: 8,
+                        caretSize: 8,
+                    }
+                },
+                animation: false 
+            }
+        });
+    </script>
+</body>
+</html>

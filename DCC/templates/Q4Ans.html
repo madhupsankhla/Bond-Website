@@ -1,0 +1,90 @@
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Data</title>
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        h1 {
+            font-size: 28px; 
+            font-weight: bold;
+            text-decoration: underline;
+            margin-bottom: 20px; 
+        }
+
+        p {
+            margin-bottom: 20px; 
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px; 
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold; 
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            border-radius: 5px; 
+        }
+
+        .download-btn:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Donation Data</h1>
+    <p>Total Denominations for all Purchasers: {{ total_sum }}</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name of the Purchaser</th>
+                <th>Denominations</th>
+                <th>Bond Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in donation_data %}
+            <tr>
+                <td>{{ item['Name of the Purchaser'] }}</td>
+                <td>{{ item['Denominations'] }}</td>
+                <td>{{ item['Bond Number'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="download-btn" onclick="openPrint()">Download PDF</button>
+
+    <script>
+        function openPrint() {
+            window.print();
+        }
+    </script>
+</body>
+</html>

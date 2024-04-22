@@ -1,0 +1,91 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            background-color: #f0f2f5; 
+            font-family: "Arial", sans-serif; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px; 
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold; 
+        }
+
+        .download-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px; 
+        }
+
+        .download-btn:hover {
+            background-color: #45a049; 
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Sr No.</th>
+            <th>Reference No (URN)</th>
+            <th>Journal Date</th>
+            <th>Date of Purchase</th>
+            <th>Date of Expiry</th>
+            <th>Name of the Purchaser</th>
+            <th>Prefix</th>
+            <th>Bond Number</th>
+            <th>Denominations</th>
+            <th>Issue Branch Code</th>
+            <th>Issue Teller</th>
+            <th>Status</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{ row[0] }}</td>
+            <td>{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[3] }}</td>
+            <td>{{ row[4] }}</td>
+            <td>{{ row[5] }}</td>
+            <td>{{ row[6] }}</td>
+            <td>{{ row[7] }}</td>
+            <td>{{ row[8] }}</td>
+            <td>{{ row[9] }}</td>
+            <td>{{ row[10] }}</td>
+            <td>{{ row[11] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <button class="download-btn" onclick="openPrint()">Download PDF</button>
+
+    <script>
+        function openPrint() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
